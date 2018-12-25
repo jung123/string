@@ -152,32 +152,29 @@ static inline void jh_pop_first ( jh_head_t *head, jh_node_t **return_node )
 	const typeof( ((type *)0)->member ) *__mptr = (ptr);	\
 	(type *)( (char *)__mptr - offsetof(type,member) );})
 
-/* Get Node from Type */
-//#define JH_GET_NODE_FROM_TYPE(  ) { \
-//    \
-//}
+/* Get List Head Node */
+#define JH_FIRST(head) ({   \
+    typeof(head.first.next) __ptr = (typeof(head.first.next))(head.first.next);\
+    __ptr;})
 
-/* Get Type from Node */
-//#define JH_GET_TYPE_FROM_NODE(  ) { \
-//    \
-//}
+/* Get List Tail Node */
+#define JH_TAIL(head) ({    \
+    typeof(head.first.prev) __ptr = (typeof(head.first.prev))(head.first.prev);	\
+    __ptr;})
+
+/* Get List Init Node */
+#define JH_INIT_NODE(head) ({	\
+	typeof(head.first) *_ptr = (typeof(head.first) *)&head.first;	\
+	_ptr;})
 
 /* For loop on List */
 /*
  *  From [List Head] -> to [List Tail]
  *  'Safe'는 side effect에 대하여...
  */
-#define JH_FOR_LIST_SAFE(type, member, container, jh_first_node) ({				    \
-	for (											    \
-	    typeof(jh_first_node) _jh_node = jh_first_node->next;				    \
-	    ((jh_first_node != _jh_node) && ( container = container_of(_jh_node, type, member) ));  \
-	    _jh_node = _jh_node->next								    \
-	);})
-
-/*
- * #define TAILQ_FOREACH_SAFE(var, head, field, tvar)	    \
- *  for ((var) = TAILQ_FIRST((head));		\
- *	    (var) && ((tvar) = TAILQ_NEXT((var), field), 1);	\
- *		    (var) = (tvar))
- *		    #endif
- */
+#define JH_FOR_LIST_SAFE(type, member, container, head)		\
+    for (							\
+        typeof(((type *)0)->member) *_jh_node = JH_FIRST(head);	\
+        ((_jh_node) && (JH_INIT_NODE(head) != _jh_node) && ( container = container_of(_jh_node, type, member) ));  \
+        _jh_node = _jh_node->next				\
+    )

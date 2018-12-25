@@ -34,18 +34,16 @@ int main () {
 	jh_init_node ( &work->jh_node );
 	printf ("[alloc node] val:%d\n", i);
 
-	jh_insert_node_head ( &work_head.jh_head, &work->jh_node );
+	jh_insert_node_tail ( &work_head.jh_head, &work->jh_node );
 	printf ("[insert node] id:%d\n", i);
 
 	work_head.len++;
     }
 
     i = 0;
-    jh_node_t *first_node = &work_head.jh_head.first;
-    JH_FOR_LIST_SAFE(work_t, jh_node, work, first_node) 
+    JH_FOR_LIST_SAFE(work_t, jh_node, work, work_head.jh_head) 
     {
-    
-	printf ("[for loop] id:%d, val:%d", i, work->val);
+	printf ("[for loop] id:%d, val:%d\n", i++, work->val);
     }
 
     return 0;

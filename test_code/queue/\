@@ -1,0 +1,15 @@
+
+OBJECT=test_queue.o
+
+TARGET=test_queue
+
+CC=gcc
+LD=gcc
+
+$(TARGET): $(OBJECT)
+	$(LD) $(OBJECT) -o $(TARGET) 
+
+
+*c.*o :
+	$(CC) -o $@
+	
