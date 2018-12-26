@@ -2,6 +2,8 @@
  * < list 구현을 위한 것들 >
  */
 
+#ifndef __JH_QUEUE__
+#define __JH_QUEUE__
 /* brief    : 
  * details  : 
  * author   : 김중현
@@ -178,3 +180,6 @@ static inline void jh_pop_first ( jh_head_t *head, jh_node_t **return_node )
         ((_jh_node) && (JH_INIT_NODE(head) != _jh_node) && ( container = container_of(_jh_node, type, member) ));  \
         _jh_node = _jh_node->next				\
     )
+
+/***********************/
+#endif
