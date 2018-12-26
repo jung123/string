@@ -1,0 +1,12 @@
+# Global define 
+
+
+# compile
+CC=gcc
+CFLAGS=-Wall
+
+# linking
+LD=gcc
+LDFLAGS=-lpthread
+
+
